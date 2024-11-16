@@ -1,13 +1,18 @@
 {% extends "network/layout.html" %}
 
+{% load static %}
+
 {% block body %}
     <h1>All Posts</h1>
+
+    <!-- New Post Form (Initially hidden) -->
     {% if user.is_authenticated %}
-    <div class="new-post">
+    <div id="new-post" class="new-post" style="display: none;"> <!-- Initially hidden -->
+        <h2>New Post</h2>
         <form action="" method="post">
             {% csrf_token %}
             <div class="form-group">
-            <textarea name="content" class="form-control" placeholder="What's on your mind?"></textarea>
+                <textarea name="content" class="form-control" placeholder="What's on your mind?"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Post</button>
         </form>
@@ -15,5 +20,9 @@
     {% else %}
     <p>You must be <a href="{% url 'login' %}">logged in</a> to post.</p>
     {% endif %}
+{% endblock %}
 
+{% block script %}
+    <!-- Link to the external JavaScript file -->
+    <script src="{% static 'network/work.js' %}"></script>
 {% endblock %}

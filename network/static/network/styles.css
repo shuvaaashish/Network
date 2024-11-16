@@ -1,13 +1,53 @@
 .navbar-nav {
     margin: auto;
 }
+
 .navbar-brand img {
     height: 60px;
-    width: 150px; 
+    width: auto;
 }
+
 .navbar-text {
-    font-size: 1.5rem; 
-    font-weight: bold; 
-    text-align: center; 
-    width: 100%; 
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FFFFFF !important;
+}
+
+.navbar.navbar-light {
+    background-color: #9B59B6 !important;
+}
+
+body {
+    background-color: #F3E5F5;
+}
+
+.navbar .nav-link {
+    color: #FFFFFF !important;
+    font-size: 1.1rem;
+    padding: 10px 15px;
+}
+
+.navbar .nav-link:hover {
+    color: #D4A1FF !important;
+}
+
+.navbar-nav .nav-item {
+    margin-right: 15px;
+}
+
+.navbar {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;  /* Keeps the navbar content spaced correctly */
+    align-items: center;  /* Aligns items vertically in the center */
+}
+
+.navbar .navbar-text {
+    flex-grow: 1;  /* Ensures the text takes up remaining space */
+    text-align: center;  /* Center the text */
+}
+
+.navbar.navbar-light {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
