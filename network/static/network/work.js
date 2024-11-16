@@ -2,37 +2,30 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("JavaScript is loaded and ready!");
 
     // Function to show the All Posts section and hide New Post form
-    function showAllPosts() {
-        console.log("Showing All Posts");
-        document.querySelector('#all-posts').style.display = 'block';  // Show all posts
-        document.querySelector('#new-post').style.display = 'none';    // Hide new post form
+    function toggleView(view) {
+        const allPosts = document.querySelector('#all-posts');
+        const newPostForm = document.querySelector('#new-post');
+        
+        if (view === 'all') {
+            allPosts.style.display = 'block';
+            newPostForm.style.display = 'none';
+        } else {
+            allPosts.style.display = 'none';
+            newPostForm.style.display = 'block';
+        }
     }
 
-    // Function to show the New Post form and hide All Posts section
-    function showNewPost() {
-        console.log("Showing New Post Form");
-        document.querySelector('#all-posts').style.display = 'none';   // Hide all posts
-        document.querySelector('#new-post').style.display = 'block';   // Show new post form
-    }
+    // Event listeners for showing All Posts and New Post form
+    document.querySelector('#showAllPostsLink')?.addEventListener('click', function(event) {
+        event.preventDefault();  // Prevent default link behavior
+        toggleView('all');       // Show All Posts
+    });
 
-    // Get the "All Posts" link and add the event listener
-    const showAllPostsLink = document.querySelector('#showAllPostsLink');
-    if (showAllPostsLink) {
-        showAllPostsLink.addEventListener('click', function(event) {
-            event.preventDefault();  // Prevent default link behavior
-            showAllPosts();          // Show the posts
-        });
-    }
+    document.querySelector('#showNewPostLink')?.addEventListener('click', function(event) {
+        event.preventDefault();  // Prevent default link behavior
+        toggleView('new');       // Show New Post Form
+    });
 
-    // Get the "Create New Post" link and add the event listener
-    const showNewPostLink = document.querySelector('#showNewPostLink');
-    if (showNewPostLink) {
-        showNewPostLink.addEventListener('click', function(event) {
-            event.preventDefault();  // Prevent default link behavior
-            showNewPost();           // Show the new post form
-        });
-    }
-
-    // Initialize the page by showing the All Posts section by default
-    showAllPosts();
+    // Initialize the page by showing All Posts section by default
+    toggleView('all');
 });
