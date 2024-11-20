@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
             allPosts.style.display = 'block';
             newPostForm.style.display = 'none';
         } else {
-            allPosts.style.display = 'none';
+            allPosts.style.display = 'block';
             newPostForm.style.display = 'block';
         }
     }

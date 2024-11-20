@@ -21,7 +21,15 @@
     <h1>All Posts</h1>
     <!-- All Posts Section -->
     <div id="all-posts">
-        <!-- Content for all posts will go here -->
+    {% for post in posts %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.user }}</h5>
+                <p class="card-text">{{ post.content }}</p>
+                <p class="card-text"><small class="text-muted">{{ post.timestamp }}</small></p>
+            </div>
+        </div>
+    {% endfor %}
     </div>
 
 

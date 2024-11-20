@@ -6,7 +6,7 @@ class User(AbstractUser):
     pass
 
 class Post(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
