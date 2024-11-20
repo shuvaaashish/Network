@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.core.paginator import Paginator
 
 from .models import User,Post
 
@@ -14,9 +15,13 @@ def index(request):
         post = Post(author=author, content=content)
         post.save()
     posts = Post.objects.all().order_by("-created_at")
+    paginator = Paginator(posts, 10)
+    pageNumber = request.GET.get('page')
+    pages= paginator.get_page(pageNumber)
 
     return render(request, "network/index.html",{
-        "posts":posts
+        "posts":posts,
+        "pages":pages
     })
 
 
@@ -70,3 +75,14 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+    
+def profile(request):
+    user = User.objects.get(username=request.user)
+    posts = Post.objects.filter(author=user).order_by("-created_at")
+    paginator = Paginator(posts, 10)
+    pageNumber = request.GET.get('page')
+    pages= paginator.get_page(pageNumber)
+    return render(request, "network/profile.html",{
+        "user":user,
+        "posts":posts,
+        "pages":pages})

@@ -1,0 +1,39 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<div class="container">
+    <h2>{{ user.username }}'s Profile</h2>
+    <p>Email: {{ user.email }}</p>
+
+    <h3>Posts</h3>
+    <div class="posts">
+        {% for post in pages %}
+            <div class="post">
+                <h4>{{ post.title }}</h4>
+                <p>{{ post.content }}</p>
+                <small>Posted on {{ post.created_at }}</small>
+            </div>
+        {% empty %}
+            <p>No posts yet.</p>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if pages.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ pages.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
+            </span>
+
+            {% if pages.has_next %}
+                <a href="?page={{ pages.next_page_number }}">next</a>
+                <a href="?page={{ pages.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}
