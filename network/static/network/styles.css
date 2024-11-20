@@ -21,6 +21,7 @@ body {
     background-color: #AE7DAC;
 }
 
+
 .navbar .nav-link {
     color: #FFFFFF !important;
     font-size: 1.1rem;
@@ -50,4 +51,153 @@ body {
 
 .navbar.navbar-light {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#all-posts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 10px;
+}
+
+.card {
+    background-color: #F3DADF;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.text-muted {
+    font-size: 0.875rem;
+    color: #888;
+}
+
+@media (max-width: 600px) {
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+    }
+
+    .card-text {
+        font-size: 0.95rem;
+    }
+}
+#new-post {
+    background-color: #F3DADF;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto;
+    display: none;
+}
+
+#new-post h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+textarea.form-control {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    font-size: 1rem;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: none;
+}
+
+textarea.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button.btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.btn:hover {
+    background-color: #0056b3;
+}
+
+p {
+    font-size: 1rem;
+    color: #555;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    #new-post {
+        padding: 15px;
+    }
+
+    #new-post h2 {
+        font-size: 1.25rem;
+    }
+
+    textarea.form-control {
+        font-size: 0.95rem;
+    }
+
+    button.btn {
+        font-size: 0.95rem;
+    }
+}
+body h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #FFFFFF;
 }
