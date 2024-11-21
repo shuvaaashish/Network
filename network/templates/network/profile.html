@@ -1,5 +1,7 @@
 {% extends "network/layout.html" %}
 
+{% load static %}
+
 {% block body %}
 <div class="container">
     <h2>{{ user.username }}'s Profile</h2>
@@ -36,4 +38,6 @@
         </span>
     </div>
 </div>
+{% endblock %}
+{% block script %}
 {% endblock %}

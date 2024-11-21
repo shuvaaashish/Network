@@ -76,8 +76,8 @@ def register(request):
     else:
         return render(request, "network/register.html")
     
-def profile(request):
-    user = User.objects.get(username=request.user)
+def profile(request, uid):
+    user = User.objects.get(pk=uid)
     posts = Post.objects.filter(author=user).order_by("-created_at")
     paginator = Paginator(posts, 10)
     pageNumber = request.GET.get('page')
