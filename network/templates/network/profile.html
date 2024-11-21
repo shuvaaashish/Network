@@ -4,40 +4,57 @@
 
 {% block body %}
 <div class="container">
-    <h2>{{ user.username }}'s Profile</h2>
-    <p>Email: {{ user.email }}</p>
+    <h1 class="text-center">{{ user.username }}'s Profile</h1>
+    
+    <!-- Display Number of Followers and Following -->
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>Followers:</strong>{{ follower }} </p>
+        </div>
+        <div class="col-md-6">
+            <p><strong>Following:</strong>{{ following }} </p>
+        </div>
+    </div>
 
-    <h3>Posts</h3>
-    <div class="posts">
-        {% for post in pages %}
-            <div class="post">
-                <h4>{{ post.title }}</h4>
-                <p>{{ post.content }}</p>
-                <small>Posted on {{ post.created_at }}</small>
+    <!-- Display the Follow/Unfollow Button -->
+   
+    </div>
+    {% endif %}
+
+    <h1 class="text-center">Posts</h1>
+    <div class="posts" id="all-posts">
+        {% for post in posts %}
+            <div class="post card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ post.title }}</h4>
+                    <p class="card-text">{{ post.content }}</p>
+                    <small class="text-muted">Posted on {{ post.created_at }}</small>
+                </div>
             </div>
         {% empty %}
-            <p>No posts yet.</p>
+            <p class="text-center">No posts yet.</p>
         {% endfor %}
     </div>
 
-    <div class="pagination">
+    <div class="pagination text-center">
         <span class="step-links">
-            {% if pages.has_previous %}
+            {% if posts.has_previous %}
                 <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ pages.previous_page_number }}">previous</a>
+                <a href="?page={{ posts.previous_page_number }}">previous</a>
             {% endif %}
 
             <span class="current">
-                Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
+                Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
             </span>
 
-            {% if pages.has_next %}
-                <a href="?page={{ pages.next_page_number }}">next</a>
-                <a href="?page={{ pages.paginator.num_pages }}">last &raquo;</a>
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">next</a>
+                <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
     </div>
 </div>
 {% endblock %}
+
 {% block script %}
 {% endblock %}

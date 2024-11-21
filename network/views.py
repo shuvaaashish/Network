@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.core.paginator import Paginator
 
-from .models import User,Post
+from .models import User,Post,Follow
 
 
 def index(request):
@@ -78,6 +78,8 @@ def register(request):
     
 def profile(request, uid):
     user = User.objects.get(pk=uid)
+    follower =Follow.objects.filter(user=user).count()
+    following = Follow.objects.filter(following=user).count()
     posts = Post.objects.filter(author=user).order_by("-created_at")
     paginator = Paginator(posts, 10)
     pageNumber = request.GET.get('page')
@@ -85,4 +87,7 @@ def profile(request, uid):
     return render(request, "network/profile.html",{
         "user":user,
         "posts":posts,
-        "pages":pages})
+        "pages":pages,
+        "follower":follower,
+        "following":following,
+        })
