@@ -78,7 +78,7 @@ def register(request):
     
 def profile(request, uid):
     user = User.objects.get(pk=uid)
-    follower =Follow.objects.filter(user=user).count()
+    follower =Follow.objects.filter(user=user)
     following = Follow.objects.filter(following=user).count()
     posts = Post.objects.filter(author=user).order_by("-created_at")
     paginator = Paginator(posts, 10)

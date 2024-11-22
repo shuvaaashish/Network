@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class User(AbstractUser):
@@ -11,11 +12,11 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Post by {self.author.username} on {self.created_at}"
+        return f"Post by {self.author} on {self.created_at}"
 
 class Follow(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followers")
 
     def __str__(self):
-        return f"{self.user.username} follows {self.following.username}"
+        return f"{self.user} follows {self.following}"
