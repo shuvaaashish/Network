@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("JavaScript is loaded and ready!");
 
-    // Function to show the All Posts section and hide New Post form
+    
     function toggleView(view) {
         const allPosts = document.querySelector('#all-posts');
         const newPostForm = document.querySelector('#new-post');
@@ -15,17 +15,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Event listeners for showing All Posts and New Post form
+  
     document.querySelector('#showAllPostsLink')?.addEventListener('click', function(event) {
-        event.preventDefault();  // Prevent default link behavior
-        toggleView('all');       // Show All Posts
+        window.location.href = "{% url 'index' %}";  // Navigate to the "All Posts" page
+    });
+
+    document.querySelector('#showFollowingLink')?.addEventListener('click', function(event) {
+        window.location.href = "{% url 'following' %}";  // Navigate to the "Following" page
     });
 
     document.querySelector('#showNewPostLink')?.addEventListener('click', function(event) {
-        event.preventDefault();  // Prevent default link behavior
+        event.preventDefault();  // Prevent default link behavior (for dynamic form toggle)
         toggleView('new');       // Show New Post Form
     });
-
-    // Initialize the page by showing All Posts section by default
+    
     toggleView('all');
 });

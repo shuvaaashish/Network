@@ -91,3 +91,15 @@ def profile(request, uid):
         "follower":follower,
         "following":following,
         })
+
+def following(request):
+    user = request.user
+    following = Follow.objects.filter(user=user)
+    posts = Post.objects.filter(author__in=[f.following for f in following]).order_by("-created_at")
+    paginator = Paginator(posts, 10)
+    pageNumber = request.GET.get('page')
+    pages= paginator.get_page(pageNumber)
+    return render(request, "network/index.html",{
+        "posts":posts,
+        "pages":pages
+    })
