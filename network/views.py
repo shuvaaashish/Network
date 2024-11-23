@@ -93,13 +93,20 @@ def profile(request, uid):
         })
 
 def following(request):
-    user = request.user
-    following = Follow.objects.filter(user=user)
-    posts = Post.objects.filter(author__in=[f.following for f in following]).order_by("-created_at")
-    paginator = Paginator(posts, 10)
-    pageNumber = request.GET.get('page')
-    pages= paginator.get_page(pageNumber)
-    return render(request, "network/index.html",{
-        "posts":posts,
-        "pages":pages
+    if request.method == "POST":
+        author = request.user
+        content=request.POST["content"]
+        post = Post(author=author, content=content)
+        post.save()
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        user = request.user
+        following = Follow.objects.filter(user=user)
+        posts = Post.objects.filter(author__in=[f.following for f in following]).order_by("-created_at")
+        paginator = Paginator(posts, 10)
+        pageNumber = request.GET.get('page')
+        pages= paginator.get_page(pageNumber)
+        return render(request, "network/index.html",{
+            "posts":posts,
+            "pages":pages
     })
