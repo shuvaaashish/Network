@@ -117,3 +117,12 @@ def following(request):
             "posts":posts,
             "pages":pages
     })
+def edit(request, pid):
+    post = Post.objects.get(id=pid, author=request.user)
+    if request.method == 'POST':
+        content = request.POST.get('content', '')
+        post.content = content
+        post.save()
+        return HttpResponseRedirect(reverse('index'))
+    
+    return render(request, 'network/edit_post.html', {'post': post})

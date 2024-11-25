@@ -10,4 +10,5 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("profile/<int:uid>", views.profile, name="profile"),
     path("following", views.following, name="following"),
+    path("edit/<int:pid>", views.edit, name="edit"),
 ]
