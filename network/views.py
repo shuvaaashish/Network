@@ -77,14 +77,21 @@ def register(request):
         return render(request, "network/register.html")
     
 def profile(request, uid):
-        user = User.objects.get(pk=uid)
-        follower =Follow.objects.filter(user=user)
-        following = Follow.objects.filter(following=user).count()
-        posts = Post.objects.filter(author=user).order_by("-created_at")
-        paginator = Paginator(posts, 10)
-        pageNumber = request.GET.get('page')
-        pages= paginator.get_page(pageNumber)
-        return render(request, "network/profile.html",{
+        if request.method == "POST":
+            author = request.user
+            content=request.POST["content"]
+            post = Post(author=author, content=content)
+            post.save()
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            user = User.objects.get(pk=uid)
+            follower =Follow.objects.filter(user=user)
+            following = Follow.objects.filter(following=user).count()
+            posts = Post.objects.filter(author=user).order_by("-created_at")
+            paginator = Paginator(posts, 10)
+            pageNumber = request.GET.get('page')
+            pages= paginator.get_page(pageNumber)
+            return render(request, "network/profile.html",{
             "user":user,
             "posts":posts,
             "pages":pages,

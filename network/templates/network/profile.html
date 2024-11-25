@@ -5,6 +5,20 @@
 {% block body %}
 <div class="container">
     <h1 class="text-center">{{ user.username }}'s Profile</h1>
+    {% if user.is_authenticated %}
+    <div id="new-post" class="new-post" style="display: none;">
+        <h2>New Post</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <textarea name="content" class="form-control" placeholder="What's on your mind?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+    </div>
+    {% else %}
+    <p>You must be <a href="{% url 'login' %}">logged in</a> to post.</p>
+    {% endif %}
     
     <!-- Display Number of Followers and Following -->
     <div class="row">
