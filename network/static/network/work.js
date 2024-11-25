@@ -15,11 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // When "All Posts" link is clicked
-    document.querySelector('#showAllPostsLink')?.addEventListener('click', function(event) {
-        event.preventDefault();  // Prevent default link behavior
-        toggleView('all');       // Show All Posts
-    });
 
     // When "Following" link is clicked
     document.querySelector('#showFollowingLink')?.addEventListener('click', function(event) {
