@@ -106,6 +106,6 @@
 
 {% endblock %}
 
-{% block script %}
-    <script src="{% static 'network/work.js' %}"></script>
+{% block extra_js %}
+    {{ block.super }}
 {% endblock %}

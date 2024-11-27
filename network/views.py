@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 from .models import User,Post,Follow
 
@@ -126,3 +127,15 @@ def edit(request, pid):
         return HttpResponseRedirect(reverse('index'))
     
     return render(request, 'network/edit_post.html', {'post': post})
+
+@login_required
+def toggle_follow(request, uid):
+    target_user = User.objects.get(id=uid)
+    follow = Follow.objects.filter(user=request.user, following=target_user).first()
+    
+    if follow:
+        follow.delete()
+    else:
+        Follow.objects.create(user=request.user, following=target_user)
+    return HttpResponseRedirect(reverse('profile', args=[uid]))
+
