@@ -196,3 +196,10 @@ body h1 {
     font-size: 2.5rem;
     color: #FFFFFF;
 }
+.favorite-btn .material-symbols-outlined {
+    transition: filter 0.3s ease; 
+}
+
+.favorite-btn .material-symbols-outlined:hover {
+    filter: blur(1px); 
+}

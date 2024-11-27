@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             newPostForm.style.display = 'block';
         }
     }
-
+    document.querySelectorAll('.favorite-btn') 
 
     // When "Following" link is clicked
     document.querySelector('#showFollowingLink')?.addEventListener('click', function(event) {
