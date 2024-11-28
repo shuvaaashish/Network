@@ -1,12 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 
-from .models import User,Post,Follow
+from .models import User,Post,Follow,Like
 
 
 def index(request):
@@ -15,6 +15,7 @@ def index(request):
         content=request.POST["content"]
         post = Post(author=author, content=content)
         post.save()
+        return HttpResponseRedirect(reverse("index"))
     else:
         posts = Post.objects.all().order_by("-created_at")
         paginator = Paginator(posts, 10)
@@ -23,7 +24,7 @@ def index(request):
         return render(request, "network/index.html",{
         "posts":posts,
         "pages":pages
-    })
+        })
 
 
 def login_view(request):
@@ -139,3 +140,17 @@ def toggle_follow(request, uid):
         Follow.objects.create(user=request.user, following=target_user)
     return HttpResponseRedirect(reverse('profile', args=[uid]))
 
+def toggle_like(request, pid):
+    post = Post.objects.get(id=pid)
+    user = request.user
+    existing_like = Like.objects.filter(user=user, post=post)
+
+    if existing_like.exists():
+        existing_like.delete() 
+    else:
+        Like.objects.create(user=user, post=post)  
+    like_count = post.post_likes.count()
+
+    return JsonResponse({
+        'like_count': like_count
+    })

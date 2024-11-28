@@ -14,12 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
             newPostForm.style.display = 'block';
         }
     }
-    document.querySelectorAll('.favorite-btn') 
 
     // When "Following" link is clicked
     document.querySelector('#showFollowingLink')?.addEventListener('click', function(event) {
         event.preventDefault();  // Prevent default link behavior
-        window.location.href = "{% url 'following' %}";  // Navigate to the "Following" page
+        window.location.href = followingUrl;  // Navigate to the "Following" page
     });
 
     // When "Create New Post" is clicked
@@ -27,6 +26,27 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();  // Prevent default link behavior (for dynamic form toggle)
         toggleView('new');       // Show the New Post Form if already on the All Posts page
     });
+
+    // Favorite functionality
+    document.querySelectorAll('.favorite-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const postId = this.dataset.postId;
+            likePost(postId);
+            const icon = this.querySelector('.material-symbols-outlined');
+            icon.classList.toggle('liked');
+        });
+    });
+
+    function likePost(postId) {
+        fetch(`/post/${postId}/like/`)
+        .then(response => response.json())
+        .then(data => {
+            const likeCount = document.querySelector(`#like-count-${postId}`);
+            if (likeCount) {
+                likeCount.textContent = data.like_count;
+            }
+        });
+    }
 
     // Edit functionality
     document.querySelectorAll('.edit-btn').forEach(button => {

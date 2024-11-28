@@ -24,30 +24,36 @@
     {% for post in pages %}
         <div class="card mb-3">
             <div class="card-body">
+
                 <h5 class="card-title"><a href="{% url 'profile' post.author.id %}">{{ post.author }}</a></h5>
                 <p class="card-text">{{ post.content }}</p>
                 <p class="card-text"><small class="text-muted">{{ post.created_at }}</small></p>
                 {% if user.is_authenticated %}
-                <button class="favorite-btn" style="background: none; border: none; padding: 0;">
-                <span class="material-symbols-outlined" style="font-size: 36px; vertical-align: middle;">
-                    favorite
+                <button class="favorite-btn" style="background: none; border: none; padding: 0;" data-post-id="{{ post.id }}">
+                    <span class="material-symbols-outlined" style="font-size: 36px; vertical-align: middle;">
+                        favorite
                     </span>
+                    <span class="material-icons-outlined">
+                        favorite
+                        </span>
                 </button>
-                    {% if post.author == user %}
-                        <button class="btn btn-primary edit-btn">Edit</button>
-                        <form class="edit-form" action="{% url 'edit' post.id %}" method="post" style="display: none;">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <textarea name="content" class="form-control edit-content">{{ post.content }}</textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary save-btn">Save</button>
-                            <button type="button" class="btn btn-secondary cancel-btn">Cancel</button>
-                        </form>
-                    {% endif %}
+                <span id="like-count-{{ post.id }}">{{ post.post_likes.count }}</span>
+                {% if post.author == user %}
+                    <button class="btn btn-primary edit-btn">Edit</button>
+                    <form class="edit-form" action="{% url 'edit' post.id %}" method="post" style="display: none;">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <textarea name="content" class="form-control edit-content">{{ post.content }}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary save-btn">Save</button>
+                        <button type="button" class="btn btn-secondary cancel-btn">Cancel</button>
+                    </form>
+                {% endif %}
                 {% endif %}
             </div>
         </div>
     {% endfor %}
+    </div>
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
             <!-- Previous Button -->
