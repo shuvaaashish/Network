@@ -45,6 +45,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (likeCount) {
                 likeCount.textContent = data.like_count;
             }
+            if (icon) {
+                if (data.is_liked) {
+                    icon.classList.add('liked');
+                } else {
+                    icon.classList.remove('liked');
+                }
+            }
         });
     }
 

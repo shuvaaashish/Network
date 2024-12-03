@@ -18,6 +18,8 @@ def index(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         posts = Post.objects.all().order_by("-created_at")
+        for post in posts:
+            post.is_liked_by_user = post.post_likes.filter(user=request.user).exists()
         paginator = Paginator(posts, 10)
         pageNumber = request.GET.get('page')
         pages= paginator.get_page(pageNumber)
