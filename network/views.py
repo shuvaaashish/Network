@@ -19,7 +19,10 @@ def index(request):
     else:
         posts = Post.objects.all().order_by("-created_at")
         for post in posts:
-            post.is_liked_by_user = post.post_likes.filter(user=request.user).exists()
+            if request.user.is_authenticated:
+                post.is_liked_by_user = post.post_likes.filter(user=request.user).exists()
+            else:
+                post.is_liked_by_user = False
         paginator = Paginator(posts, 10)
         pageNumber = request.GET.get('page')
         pages= paginator.get_page(pageNumber)
@@ -93,7 +96,10 @@ def profile(request, uid):
             following = Follow.objects.filter(following=user).count()
             posts = Post.objects.filter(author=user).order_by("-created_at")
             for post in posts:
-                post.is_liked_by_user = post.post_likes.filter(user=request.user).exists()
+                if request.user.is_authenticated:
+                    post.is_liked_by_user = post.post_likes.filter(user=request.user).exists()
+                else:
+                    post.is_liked_by_user = False
             paginator = Paginator(posts, 10)
             pageNumber = request.GET.get('page')
             pages= paginator.get_page(pageNumber)
@@ -117,7 +123,10 @@ def following(request):
         following = Follow.objects.filter(user=user)
         posts = Post.objects.filter(author__in=[f.following for f in following]).order_by("-created_at")
         for post in posts:
-            post.is_liked_by_user = post.post_likes.filter(user=request.user).exists()
+            if request.user.is_authenticated:
+                post.is_liked_by_user = post.post_likes.filter(user=request.user).exists()
+            else:
+                post.is_liked_by_user = False
         paginator = Paginator(posts, 10)
         pageNumber = request.GET.get('page')
         pages= paginator.get_page(pageNumber)
