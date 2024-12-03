@@ -55,6 +55,12 @@
                     <p class="card-text">{{ post.content }}</p>
                     <small class="text-muted">Posted on {{ post.created_at }}</small><br>
                     {% if user.is_authenticated %}
+                    <button class="favorite-btn" style="background: none; border: none; padding: 0;" data-post-id="{{ post.id }}">
+                        <span class="material-symbols-outlined {% if post.is_liked_by_user %}liked{% endif %}" style="font-size: 36px; vertical-align: middle;">
+                            favorite
+                        </span>
+                    </button>
+                    <span id="like-count-{{ post.id }}">{{ post.post_likes.count }}</span>
                     {% if post.author == user %}
                         <button class="btn btn-primary edit-btn">Edit</button>
                         <form class="edit-form" action="{% url 'edit' post.id %}" method="post" style="display: none;">

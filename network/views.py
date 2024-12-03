@@ -92,6 +92,8 @@ def profile(request, uid):
             follower =Follow.objects.filter(user=user)
             following = Follow.objects.filter(following=user).count()
             posts = Post.objects.filter(author=user).order_by("-created_at")
+            for post in posts:
+                post.is_liked_by_user = post.post_likes.filter(user=request.user).exists()
             paginator = Paginator(posts, 10)
             pageNumber = request.GET.get('page')
             pages= paginator.get_page(pageNumber)
@@ -114,6 +116,8 @@ def following(request):
         user = request.user
         following = Follow.objects.filter(user=user)
         posts = Post.objects.filter(author__in=[f.following for f in following]).order_by("-created_at")
+        for post in posts:
+            post.is_liked_by_user = post.post_likes.filter(user=request.user).exists()
         paginator = Paginator(posts, 10)
         pageNumber = request.GET.get('page')
         pages= paginator.get_page(pageNumber)
