@@ -159,10 +159,13 @@ def toggle_like(request, pid):
 
     if existing_like.exists():
         existing_like.delete() 
+        is_liked = False
     else:
-        Like.objects.create(user=user, post=post)  
+        Like.objects.create(user=user, post=post) 
+        is_liked = True 
     like_count = post.post_likes.count()
 
     return JsonResponse({
-        'like_count': like_count
+        'like_count': like_count,
+        'is_liked': is_liked
     })
