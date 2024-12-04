@@ -27,7 +27,6 @@ def index(request):
         pageNumber = request.GET.get('page')
         pages= paginator.get_page(pageNumber)
         return render(request, "network/index.html",{
-        "posts":posts,
         "pages":pages
         })
 
@@ -105,7 +104,6 @@ def profile(request, uid):
             pages= paginator.get_page(pageNumber)
             return render(request, "network/profile.html",{
             "user":user,
-            "posts":posts,
             "pages":pages,
             "follower":follower,
             "following":following,
@@ -131,7 +129,6 @@ def following(request):
         pageNumber = request.GET.get('page')
         pages= paginator.get_page(pageNumber)
         return render(request, "network/index.html",{
-            "posts":posts,
             "pages":pages
     })
 def edit(request, pid):

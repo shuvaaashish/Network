@@ -1,6 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("JavaScript is loaded and ready!");
 
+    // Event listeners
+    document.querySelector('#showFollowingLink')?.addEventListener('click', handleFollowingLinkClick);
+    document.querySelector('#showNewPostLink')?.addEventListener('click', handleNewPostLinkClick);
+    document.querySelectorAll('.favorite-btn').forEach(button => button.addEventListener('click', handleFavoriteButtonClick));
+    document.querySelectorAll('.edit-btn').forEach(button => button.addEventListener('click', handleEditButtonClick));
+    document.querySelectorAll('.cancel-btn').forEach(button => button.addEventListener('click', handleCancelButtonClick));
+    document.querySelectorAll('.edit-form').forEach(form => form.addEventListener('submit', handleEditFormSubmit));
+    toggleView('all');
+
     // Function to toggle between showing all posts and the new post form
     function toggleView(view) {
         const allPosts = document.querySelector('#all-posts');
@@ -15,32 +24,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // When "Following" link is clicked
-    document.querySelector('#showFollowingLink')?.addEventListener('click', function(event) {
+    // Function to handle the "Following" link click
+    function handleFollowingLinkClick(event) {
         event.preventDefault();  // Prevent default link behavior
         window.location.href = followingUrl;  // Navigate to the "Following" page
-    });
+    }
 
-    // When "Create New Post" is clicked
-    document.querySelector('#showNewPostLink')?.addEventListener('click', function(event) {
-        event.preventDefault();  // Prevent default link behavior (for dynamic form toggle)
-        toggleView('new');       // Show the New Post Form if already on the All Posts page
-    });
+    // Function to handle the "Create New Post" link click
+    function handleNewPostLinkClick(event) {
+        event.preventDefault();
+        toggleView('new');  // Show the New Post Form if already on the All Posts page
+    }
 
-    // Favorite functionality
-    document.querySelectorAll('.favorite-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const postId = this.dataset.postId;
-            likePost(postId);
-            const icon = this.querySelector('.material-symbols-outlined');
-            icon.classList.toggle('liked');
-        });
-    });
-
-    function likePost(postId) {
-        fetch(`/post/${postId}/like/`)
-        .then(response => response.json())
-        .then(data => {
+    // Function to handle the favorite button click
+    function handleFavoriteButtonClick() {
+        const postId = this.dataset.postId;
+        const icon = this.querySelector('.material-symbols-outlined');
+        
+        likePost(postId).then(data => {
             const likeCount = document.querySelector(`#like-count-${postId}`);
             if (likeCount) {
                 likeCount.textContent = data.like_count;
@@ -55,47 +56,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Edit functionality
-    document.querySelectorAll('.edit-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const cardBody = this.closest('.card-body');
-            const editForm = cardBody.querySelector('.edit-form');
-            const content = cardBody.querySelector('.card-text');
+    // Function to like a post
+    function likePost(postId) {
+        return fetch(`/post/${postId}/like/`)
+            .then(response => response.json());
+    }
 
-            content.style.display = 'none';
-            editForm.style.display = 'block';
-        });
-    });
+    // Function to handle the edit button click
+    function handleEditButtonClick() {
+        const cardBody = this.closest('.card-body');
+        const editForm = cardBody.querySelector('.edit-form');
+        const content = cardBody.querySelector('.card-text');
 
-    document.querySelectorAll('.cancel-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const cardBody = this.closest('.card-body');
-            const editForm = cardBody.querySelector('.edit-form');
-            const content = cardBody.querySelector('.card-text');
+        content.style.display = 'none';
+        editForm.style.display = 'block';
+    }
 
-            content.style.display = 'block';
-            editForm.style.display = 'none';
-        });
-    });
+    // Function to handle the cancel button click
+    function handleCancelButtonClick() {
+        const cardBody = this.closest('.card-body');
+        const editForm = cardBody.querySelector('.edit-form');
+        const content = cardBody.querySelector('.card-text');
 
-    document.querySelectorAll('.edit-form').forEach(form => {
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
+        content.style.display = 'block';
+        editForm.style.display = 'none';
+    }
 
-            const cardBody = this.closest('.card-body');
-            const content = cardBody.querySelector('.card-text');
-            const editContent = this.querySelector('.edit-content').value;
+    // Function to handle the edit form submission
+    function handleEditFormSubmit(event) {
+        event.preventDefault();
 
-            // Update the content on the page
-            content.textContent = editContent;
-            content.style.display = 'block';
-            this.style.display = 'none';
+        const cardBody = this.closest('.card-body');
+        const content = cardBody.querySelector('.card-text');
+        const editContent = this.querySelector('.edit-content').value;
 
-            // Submit the form
-            this.submit();
-        });
-    });
+        // Update the content on the page
+        content.textContent = editContent;
+        content.style.display = 'block';
+        this.style.display = 'none';
 
-    // Initialize the page by showing All Posts section by default
-    toggleView('all');
+        // Submit the form
+        this.submit();
+    }
 });
