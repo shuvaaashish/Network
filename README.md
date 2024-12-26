@@ -9,6 +9,13 @@ User-friendly Interface: A smooth and interactive design for an engaging user ex
 This project aims to demonstrate the power of Django for backend development combined with JavaScript for dynamic frontend functionality, providing a foundation for building scalable social media applications.
 
 
+## Technology Stack
+- Backend:Django
+- Fronted:HTML,CSS,JavaScript
+- Database:Sqlite3
+- Others:Bootstrap
+
+
 ## Installation
 
 Install my-project from below listed process.
